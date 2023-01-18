@@ -67,7 +67,7 @@
                 <!-- Masthead Heading-->
                 <h1 class="masthead-heading mb-0">HiddenSinger: High-quality Singing Voice Synthesis via Neural Audio Codec and Latent Diffusion Models</h1>
                 <!-- Masthead Subheading-->
-                <p class="pre-wrap masthead-subheading font-weight-light mb-0 font-italic">anonymous</p>
+                <!-- <p class="pre-wrap masthead-subheading font-weight-light mb-0 font-italic">anonymous</p> -->
             </div>
         </header>
         
@@ -141,10 +141,6 @@
                 <div class="text-center">
                     <h2 class="page-section-heading d-inline-block text-white">Comparative Model</h2>
                 </div>
-                <div class="text-center">
-                    <br>
-                    <img width="90%" src="./assets/svs_table.png">
-                </div>
                 <br>
                 <!-- Sample of Comparison Models-->
                 <div class="row">
@@ -152,21 +148,21 @@
                         <script>
                             dir = "./assets/wavs/comparison"
                             exp = {"GT": "gt",
-                                   "HiFi-GAN": "hifigan_recon",
-                                   "FastSpeech 2": "fs",
-                                   "DiffSinger": "ds",
-                                   "VISinger": "vi",
-                                   "HiddenSinger": "hs",
+                                   "HiFi-GAN": "hifigan",
+                                   "FastSpeech 2": "fastspeech",
+                                   "DiffSinger": "diffsinger",
+                                   "VISinger": "visinger",
+                                   "HiddenSinger": "hiddensinger",
                                 }
                             audios = {
-                                "p225_001": {"script": "",
-                                             "pronunciation": ""},
-                                "p225_002": {"script": "",
-                                             "pronunciation": ""},
-                                "p225_003": {"script": "",
-                                             "pronunciation": ""},
-                                "p225_004": {"script": "",
-                                             "pronunciation": ""},
+                                "C2167_29": {"script": "우 우 불안해하지는 마",
+                                             "pronunciation": "wo wo bul-anhaehajineun ma"},
+                                "C0676_18": {"script": "아직 사랑해 여기 이 자리에서",
+                                             "pronunciation": "ajig salanghae yeogi i jalieseo"},
+                                "C0409_13": {"script": "어디로 떠나볼까 우리",
+                                             "pronunciation": "eodilo tteonabolkka uli"},
+                                "C0388_10": {"script": "내 앞에서 눈물 참지마요 오",
+                                             "pronunciation": "nae nun ap-eseo nunmul chamjimayo ooh"},
                             }
                             for(var audio in audios){
                                 div = document.getElementById("div2")
@@ -188,27 +184,23 @@
               <div class="text-center">
                   <h2 class="page-section-heading d-inline-block text-white">Audio Autoencoder</h2>
               </div>
-              <div class="text-center">
-                <br>
-                <img width="90%" src="./assets/autoencoder_table.png">
-              </div>
               <br>
               <!-- Samlpe of Audio Autoencoder -->
               <div class="row">
                   <div id="div3" class="col-lg-auto ml-auto">
                       <script>
-                          dir = "./wavs/autoencoder"
-                          exp = {"GT": "target",
+                          dir = "./assets/wavs/autoencoder"
+                          exp = {"GT": "gt",
                                  "HiFi-GAN": "hifi",
                                  "Autoencoder w/o reg.": "naive",
                                  "Autoencoder w/ KL-reg.": "kl",
                                  "Autoencoder w/ RVQ-reg.": "rvq",
                               }
                           audios = {
-                              "p225_001": {"script": "",
-                                           "pronunciation": ""},
-                              "p225_002": {"script": "",
-                                           "pronunciation": ""},
+                              "ba_03_30": {"script": "그댈 편히 쉬게 할 거야",
+                                           "pronunciation": "geudael pyeonhi swige hal geoya"},
+                              "kr012a_480_6": {"script": "한 줄기의 따스한 햇살 받으며",
+                                           "pronunciation": "han julgiui ttaseuhan haes-sal bad-eumyeo"},
                               "p225_003": {"script": "",
                                            "pronunciation": ""},
                               "p225_004": {"script": "",
@@ -231,10 +223,6 @@
               <div class="text-center">
                 <h2 class="page-section-heading d-inline-block text-white">Latent Generator with Audio Autoencoder</h2>
               </div>
-              <div class="text-center">
-                <br>
-                <img width="90%" src="./assets/lg_table.png">
-              </div>
               <br>
               <!-- Samlpe of Latent Generator with Audio Autoencoder -->
               <div class="row">
@@ -242,9 +230,9 @@
                       <script>
                           dir = "./wavs/lg"
                           exp = {"GT": "target",
-                                 "LG w/o reg.": "naive_lg",
-                                 "LG w/ KL-reg.": "kl_lg", 
-                                 "LG w/ RVQ-reg.": "rvq_lg",
+                                 "Latent Generator w/o reg.": "naive_lg",
+                                 "Latent Generator w/ KL-reg.": "kl_lg", 
+                                 "Latent Generator w/ RVQ-reg. (proposed)": "rvq_lg",
                                 }
                           audios = {
                               "p225_001": {"script": "",
@@ -281,18 +269,14 @@
                 <div class="row">
                     <div id="div5" class="col-lg-auto ml-auto">
                         <script>
-                            dir = "./wavs/pcd"
-                            exp = {"Target Speaker": "target",
+                            dir = "./assets/wavs/unsupervised"
+                            exp = {"Target Speaker (Audio only)": "target",
                                    "HiddenSinger-U": "hidden_u",
                                 }
                             audios = {
-                                "p225_001": {"script": "",
-                                             "pronunciation": ""},
-                                "p225_002": {"script": "",
-                                             "pronunciation": ""},
-                                "p225_003": {"script": "",
-                                             "pronunciation": ""},
-                                "p225_004": {"script": "",
+                                "shinsoi": {"script": "헤어나올 수가 없어",
+                                            "pronunciation": ""},
+                                "leedahyun": {"script": "오늘도 너의 소식이 궁금해",
                                              "pronunciation": ""},
                             }
                             for(var audio in audios){
@@ -314,10 +298,6 @@
                 <!-- About Section Heading-->
                 <div class="text-center">
                     <h2 class="page-section-heading d-inline-block text-white">Ablation Study</h2>
-                </div>
-                <div class="text-center">
-                    <br>
-                    <img width="90%" src="./assets/abl_table.png">
                 </div>
                 <br>
                 <div class="row">
