@@ -1,356 +1,371 @@
+<!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>HiddenSinger Demo Page</title>
-  <!-- 합쳐지고 최소화된 최신 CSS -->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
-<!-- 부가적인 테마 -->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
-<!-- 합쳐지고 최소화된 최신 자바스크립트 -->
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
-  <style>
-    .example {
-    font-size:20px;
-    padding-left:10px;
-    }
 
-    td{
-        width:400px;
-        text-align:center;
-        white-space:nowrap;
-        padding-left:15px;
-    }
-</style>
-</head>
 
-<body style='padding-left: 20px; padding-top: 20px'>
-  <h2 style="display:inline">HiddenSinger: Singing Voice Synthesis via Latent Diffusion and Self-supervised Speech Representation</h2>
-  <!-- <h3>Authors</h3> -->
-  <!-- <p style="width:65%">Ji-Sang Hwang(Korea University), js_hwang@korea.ac.kr</p>
-  <p style="width:65%">Sang-Hoon Lee(Korea University), sh_lee@korea.ac.kr</p>
-  <p style="width:65%">Hyung-Seok Oh(Korea University), @korea.ac.kr</p>
-  <p style="width:65%">Hyun-Woo Bae(Korea University), @korea.ac.kr</p>
-  <p style="width:65%">Seong-Whan Lee(Korea University), sw.lee@korea.ac.kr</p> -->
-<h3>Abstract</h3>
-  <p style="width:85%">Recently, denoising diffusion models have achieved remarkable performances among the generative models in various domains. However, in the speech domain, applying the diffusion model to synthesize time-varying audio has limitations in terms of complexity and controllability, since the audio synthesis requires very high dimensional samples with long-term acoustic features. To reduce the burden of model complexity for singing voice synthesis, we propose HiddenSinger, which can synthesize a high-quality singing voice using a latent diffusion model. To generate high-fidelity audio, we introduce an audio autoencoder, which can encode audio into the compressed audio representation and reconstruct high-quality audio from the quantized latent. Then, we utilize a stochastic differential equations solver to denoise a data-dependent prior noise into the latent representation. Moreover, we extend our proposed model to an unsupervised singing voice synthesis framework to train the model with the unlabeled singing voice dataset. The experimental results exhibit that our model performs better than other models in audio quality. Furthermore, HiddenSinger can synthesize high-quality singing voices with unlabeled data, which trains on only audio.</p>
-<h3>Audio Samples (Korean)</h3>
-<h4>Speech Naturalness</h4>	
-  <br>
-    <p style="width:65%">All of the generated sentences are not used during training</p>
-    <p style="width:80%">1. <i></i></p>
-  <table width="800">
-  <thead>
-  <tr>
-  <th width="200" style="text-align: center">Raw Audio</th>
-  <th width="200" style="text-align: center">HiFi-GAN (recon.)</th>
-  <th width="200" style="text-align: center">FastSpeech2 + HiFi-GAN</th>
-  <th width="200" style="text-align: center">DiffSinger + HiFi-GAN</th>
-  </tr>
-  </thead>
-  <tbody>
-  <tr>
-  <td style="text-align: center">
-  <audio controls><source src="./demo_page/sample1/raw_audio1.wav"></audio>		
-  </td>
-    <td style="text-align: center">
-  <audio controls><source src="./demo_page/sample1/recon.wav"></audio>		
-  </td>
-    <td style="text-align: center">
-  <audio controls><source src="./demo_page/sample1/fastspeech2.wav"></audio>		
-  </td>
-  <td style="text-align: center">
-    <audio controls><source src="./demo_page/sample1/diffsinger.wav"></audio>		
-    </td>
-  </tr>
-  </tbody>
-  </table>
-  <br>
-  <table width="800">
-  <thead>
-  <tr>
-  <th width="200" style="text-align: center">VISinger</th>
-  <th width="200" style="text-align: center">HiddenSinger</th>
-  <th width="200" style="text-align: center">HiddenSinger-U</th>
-  </tr>
-  </thead>
-  <tbody>
-  <tr>
-  <td style="text-align: center">
-  <audio controls><source src="./demo_page/sample1/visinger.wav"></audio>		
-  </td>
-    <td style="text-align: center">
-  <audio controls><source src="./demo_page/sample1/hiddensinger.wav"></audio>		
-  </td>
-    <td style="text-align: center">
-  <audio controls><source src="./demo_page/sample1/hiddensinger-u.wav"></audio>		
-  </td>
-  </tr>
-  </tbody>
-  </table>
-  <br>
-  <br>
-  <br>
-    <p style="width:80%">2. <i></i></p>
-    <table width="800">
-      <thead>
-      <tr>
-      <th width="200" style="text-align: center">Raw Audio</th>
-      <th width="200" style="text-align: center">HiFi-GAN (recon.)</th>
-      <th width="200" style="text-align: center">FastSpeech2 + HiFi-GAN</th>
-      <th width="200" style="text-align: center">DiffSinger + HiFi-GAN</th>
-      </tr>
-      </thead>
-      <tbody>
-      <tr>
-      <td style="text-align: center">
-      <audio controls><source src="./demo_page/sample2/raw_audio1.wav"></audio>		
-      </td>
-        <td style="text-align: center">
-      <audio controls><source src="./demo_page/sample2/recon.wav"></audio>		
-      </td>
-        <td style="text-align: center">
-      <audio controls><source src="./demo_page/sample2/fastspeech2.wav"></audio>		
-      </td>
-      <td style="text-align: center">
-        <audio controls><source src="./demo_page/sample2/diffsinger.wav"></audio>		
-        </td>
-      </tr>
-      </tbody>
-      </table>
-      <br>
-      <table width="800">
-      <thead>
-      <tr>
-      <th width="200" style="text-align: center">VISinger</th>
-      <th width="200" style="text-align: center">HiddenSinger</th>
-      <th width="200" style="text-align: center">HiddenSinger-U</th>
-      </tr>
-      </thead>
-      <tbody>
-      <tr>
-      <td style="text-align: center">
-      <audio controls><source src="./demo_page/sample2/visinger.wav"></audio>		
-      </td>
-        <td style="text-align: center">
-      <audio controls><source src="./demo_page/sample2/hiddensinger.wav"></audio>		
-      </td>
-        <td style="text-align: center">
-      <audio controls><source src="./demo_page/sample2/hiddensinger-u.wav"></audio>		
-      </td>
-      </tr>
-      </tbody>
-      </table>
-  <br>
-  <br>
-  <br>
-    <p style="width:80%">3. <i></i></p>
-    <table width="800">
-      <thead>
-      <tr>
-      <th width="200" style="text-align: center">Raw Audio</th>
-      <th width="200" style="text-align: center">HiFi-GAN (recon.)</th>
-      <th width="200" style="text-align: center">FastSpeech2 + HiFi-GAN</th>
-      <th width="200" style="text-align: center">DiffSinger + HiFi-GAN</th>
-      </tr>
-      </thead>
-      <tbody>
-      <tr>
-      <td style="text-align: center">
-      <audio controls><source src="./demo_page/sample3/raw_audio1.wav"></audio>		
-      </td>
-        <td style="text-align: center">
-      <audio controls><source src="./demo_page/sample3/recon.wav"></audio>		
-      </td>
-        <td style="text-align: center">
-      <audio controls><source src="./demo_page/sample3/fastspeech2.wav"></audio>		
-      </td>
-      <td style="text-align: center">
-        <audio controls><source src="./demo_page/sample3/diffsinger.wav"></audio>		
-        </td>
-      </tr>
-      </tbody>
-      </table>
-      <br>
-      <table width="800">
-      <thead>
-      <tr>
-      <th width="200" style="text-align: center">VISinger</th>
-      <th width="200" style="text-align: center">HiddenSinger</th>
-      <th width="200" style="text-align: center">HiddenSinger-U</th>
-      </tr>
-      </thead>
-      <tbody>
-      <tr>
-      <td style="text-align: center">
-      <audio controls><source src="./demo_page/sample3/visinger.wav"></audio>		
-      </td>
-        <td style="text-align: center">
-      <audio controls><source src="./demo_page/sample3/hiddensinger.wav"></audio>		
-      </td>
-        <td style="text-align: center">
-      <audio controls><source src="./demo_page/sample3/hiddensinger-u.wav"></audio>		
-      </td>
-      </tr>
-      </tbody>
-      </table>
-  <br>
-  <br>
-  <br>
-    <p style="width:80%">4. <i></i></p>
-    <table width="800">
-      <thead>
-      <tr>
-      <th width="200" style="text-align: center">Raw Audio</th>
-      <th width="200" style="text-align: center">HiFi-GAN (recon.)</th>
-      <th width="200" style="text-align: center">FastSpeech2 + HiFi-GAN</th>
-      <th width="200" style="text-align: center">DiffSinger + HiFi-GAN</th>
-      </tr>
-      </thead>
-      <tbody>
-      <tr>
-      <td style="text-align: center">
-      <audio controls><source src="./demo_page/sample4/raw_audio1.wav"></audio>		
-      </td>
-        <td style="text-align: center">
-      <audio controls><source src="./demo_page/sample4/recon.wav"></audio>		
-      </td>
-        <td style="text-align: center">
-      <audio controls><source src="./demo_page/sample4/fastspeech2.wav"></audio>		
-      </td>
-      <td style="text-align: center">
-        <audio controls><source src="./demo_page/sample4/diffsinger.wav"></audio>		
-        </td>
-      </tr>
-      </tbody>
-      </table>
-      <br>
-      <table width="800">
-      <thead>
-      <tr>
-      <th width="200" style="text-align: center">VISinger</th>
-      <th width="200" style="text-align: center">HiddenSinger</th>
-      <th width="200" style="text-align: center">HiddenSinger-U</th>
-      </tr>
-      </thead>
-      <tbody>
-      <tr>
-      <td style="text-align: center">
-      <audio controls><source src="./demo_page/sample4/visinger.wav"></audio>		
-      </td>
-        <td style="text-align: center">
-      <audio controls><source src="./demo_page/sample4/hiddensinger.wav"></audio>		
-      </td>
-        <td style="text-align: center">
-      <audio controls><source src="./demo_page/sample4/hiddensinger-u.wav"></audio>		
-      </td>
-      </tr>
-      </tbody>
-      </table>
-  <br>
-  <br>
-  <br>
-    <p style="width:80%">5. <i> </i></p>
-    <table width="800">
-      <thead>
-      <tr>
-      <th width="200" style="text-align: center">Raw Audio</th>
-      <th width="200" style="text-align: center">HiFi-GAN (recon.)</th>
-      <th width="200" style="text-align: center">FastSpeech2 + HiFi-GAN</th>
-      <th width="200" style="text-align: center">DiffSinger + HiFi-GAN</th>
-      </tr>
-      </thead>
-      <tbody>
-      <tr>
-      <td style="text-align: center">
-      <audio controls><source src="./demo_page/sample5/raw_audio1.wav"></audio>		
-      </td>
-        <td style="text-align: center">
-      <audio controls><source src="./demo_page/sample5/recon.wav"></audio>		
-      </td>
-        <td style="text-align: center">
-      <audio controls><source src="./demo_page/sample5/fastspeech2.wav"></audio>		
-      </td>
-      <td style="text-align: center">
-        <audio controls><source src="./demo_page/sample5/diffsinger.wav"></audio>		
-        </td>
-      </tr>
-      </tbody>
-      </table>
-      <br>
-      <table width="800">
-      <thead>
-      <tr>
-      <th width="200" style="text-align: center">VISinger</th>
-      <th width="200" style="text-align: center">HiddenSinger</th>
-      <th width="200" style="text-align: center">HiddenSinger-U</th>
-      </tr>
-      </thead>
-      <tbody>
-      <tr>
-      <td style="text-align: center">
-      <audio controls><source src="./demo_page/sample5/visinger.wav"></audio>		
-      </td>
-        <td style="text-align: center">
-      <audio controls><source src="./demo_page/sample5/hiddensinger.wav"></audio>		
-      </td>
-        <td style="text-align: center">
-      <audio controls><source src="./demo_page/sample5/hiddensinger-u.wav"></audio>		
-      </td>
-      </tr>
-      </tbody>
-      </table>
-  <br>  
-<h4>Unsupervised Learning for Singing Voice Synthesis</h4>
-  <br>
-  <p style="width:80%">We present an unsupervised singing voice synthesis framework to utilize the unlabeled dataset.</p>
-<p style="width:80%">1. </i><br></p>
-  <table width="400">
-  <thead>
-  <tr>
-  <th width="200" style="text-align: center">Target speaker (Ground-truth)</th>
-  <th width="200" style="text-align: center">Synthesized audio (HiddenSinger-U)</th>
-  </tr>
-  </thead>
-  <tbody>
-  <tr>
-  <td style="text-align: center">
-  <audio controls><source src="./demo_page/unsupervised1/GT.wav"></audio>		
-  </td>
-    <td style="text-align: center">
-  <audio controls><source src="./demo_page/unsupervised1/unsupervised.wav"></audio>		
-  </td>
-  </tr>
-  </tbody>
-  </table>
-  <br>
-  <br>
-  <p style="width:80%">1. </i><br></p>
-  <table width="400">
-  <thead>
-  <tr>
-  <th width="200" style="text-align: center">Target speaker (Ground-truth)</th>
-  <th width="200" style="text-align: center">Synthesized audio (HiddenSinger-U)</th>
-  </tr>
-  </thead>
-  <tbody>
-  <tr>
-  <td style="text-align: center">
-  <audio controls><source src="./demo_page/unsupervised2/GT.wav"></audio>		
-  </td>
-    <td style="text-align: center">
-  <audio controls><source src="./demo_page/unsupervised2/unsupervised.wav"></audio>		
-  </td>
-  </tr>
-  </tbody>
-  </table>
-  <br>
-<h3>HiddenSinger Architecture</h3>  
-<h4>Architecture overall</h4>
-  <td><img src="./assets/arch_overall.png" width="1000"></td>
-  <br>
+    <head>
+        <meta charset="utf-8">
+          <style type="text/css">
+                 a:link { color: black; text-decoration: none;}
+                 a:visited { color: black; text-decoration: none;}
+                 a:hover { color: blue; text-decoration: underline;}
+          </style>
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta name="description" content="">
+        <meta name="author" content="">
+        <title>HiddenSinger Demo</title>
+        <!-- Font Awesome icons (free version)-->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/js/all.min.js" crossorigin="anonymous"></script>
+        <!-- Core theme CSS (includes Bootstrap)-->
+        <link href="css/styles.css" rel="stylesheet">
+        <!-- Fonts CSS-->
+        <link rel="stylesheet" href="css/heading.css">
+        <link rel="stylesheet" href="css/body.css">
+        <script>
+            function createTable(dir, exp, audio, script, idx=1){
+                html = "<table class=\"table table-responsive align-content-center\" style=\"background-color: white; border-radius: 20px\">"
+                html +="<thead><tr><th colspan=\"5\" style=\"width: 40%\">"
+                html +="<div class=\"text-left\">Script : <i>"
+                html += script["script"]
+                html +="</i></div></th></tr></thead><tbody><tr>"
+                for(var key in exp){
+                    if (idx % 3 == 0){
+                        html += "<tr>"    
+                    }
+                    html +="<td style=\"vertical-align: top;\"><p></p>"
+                    html +=key
+                    html +="<div class=\"text-center\"><audio controls=\"controls\"><source src="
+                    f = dir + "/" + exp[key] + "/" + audio + ".wav"
+                    html += f
+                    html +=" type=\"audio/wav\" /></audio></div></td>"
+                    idx += 1
+                    if (idx % 3 == 0){
+                        html += "</tr>"    
+                    }
+                }
+                html +="</tr></tbody></table>"
+                return html
+            }
+        </script>
+    </head>
+    <body id="page-top">
+        <nav class="navbar navbar-expand-lg bg-secondary fixed-top" id="mainNav">
+            <div class="container"><a class="navbar-brand js-scroll-trigger" href="#page-top">HiddenSinger</a>
+                <button class="navbar-toggler navbar-toggler-right font-weight-bold bg-primary text-white rounded" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">Menu <i class="fas fa-bars"></i></button>
+                <div class="collapse navbar-collapse" id="navbarResponsive">
+                    <ul class="navbar-nav ml-auto">
+                        <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="#abstract">Abstact</a></li>
+                        <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="#hs">HiddenSinger<br>Demo</a></li>
+                        <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="#mc">Comparative<br>Model</a></li>
+                        <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="#aa">Audio<br>Autoencoder</a></li>
+                        <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="#unf">Unsupervised<br>SVS Framework</a></li>
+                        <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="#abl">Ablation<br>Study</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        
+        <header class="masthead bg-white text-left"> <!-- text-black 사용 가능 -->
+            <div class="container d-flex align-items-center flex-column">
+                <!-- Masthead Heading-->
+                <h1 class="masthead-heading mb-0">HiddenSinger: High-quality Singing Voice Synthesis via Neural Audio Codec and Latent Diffusion Models</h1>
+                <!-- Masthead Subheading-->
+                <p class="pre-wrap masthead-subheading font-weight-light mb-0 font-italic">anonymous</p>
+            </div>
+        </header>
+        
+        <!-- Abstraction -->
+        <section class="page-section portfolio" id="abstract">
+            <div class="container">
+                <!-- Portfolio Section Heading-->
+                <div class="text-center">
+                    <h2 class="page-section-heading text-secondary mb-0 d-inline-block">Abstract</h2>
+                </div>
+                <!-- Icon Divider-->
+                <div class="divider-custom">
+                    <div class="divider-custom"></div>
+                </div>
+                <!-- Portfolio Grid Items-->
+                <div class="row justify-content-center">
+                    <div class="col-lg-12 ml-auto">
+                        <p class="pre-wrap lead">Recently, denoising diffusion models have achieved remarkable performances among generative models in various domains. However, in the speech domain, applying diffusion models to synthesize time-varying audio has limitations in terms of complexity and controllability, because the audio synthesis requires very high-dimensional samples with long-term acoustic features. To reduce the burden of model complexity for singing voice synthesis, we propose HiddenSinger, which can synthesize high-quality singing voices using a neural audio codec and latent diffusion models. To generate high-fidelity audio, we introduce an audio autoencoder that can encode audio into audio codec codes as compressed latent representation and reconstruct high-fidelity audio from low-dimensional compressed latent vectors. Subsequently, we use latent diffusion models to sample latent from musical scores and then reconstruct high-quality audio by the audio autoencoder. In addition, our proposed model is extended into an unsupervised singing voice synthesis framework to train the model using an unlabeled singing voice dataset. The experimental results exhibit that our model performs better than previous models in terms of audio quality. Furthermore, HiddenSinger can synthesize high-quality singing voices using unlabeled data by training solely on only audio.</p>
+                        <br>
+                        <br>
+                    </div>
+                    <div class="text-center">
+                        <br>
+                        <img width="100%" src="./assets/arch_overall.png">
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Proposed Model - HiddenSinger -->
+        <section class="page-section bg-primary text-white mb-0" id="hs">
+            <div class="container">
+                <!-- About Section Heading-->
+                <div class="text-center">
+                    <h2 class="page-section-heading d-inline-block text-white">HiddenSinger</h2>
+                </div>
+                <br>
+                <!-- Sample of HiddenSinger -->
+                <div class="row">
+                    <div id="div1" class="col-lg-auto ml-auto">
+                        <script>
+                            dir = "./assets/wavs/hiddensinger"
+                            exp = {"GT": "gt",
+                                   "Recon": "gt_recon",
+                                   "HiddenSinger": "hs",
+                                   "HiddenSinger-U": "hs_u"}
+                            audios = {
+                                "p225_001": {"script": "",
+                                             "pronunciation": ""},
+                                "p225_002": {"script": "",
+                                             "pronunciation": ""},
+                                "p225_003": {"script": "",
+                                             "pronunciation": ""},
+                                "p225_004": {"script": "",
+                                             "pronunciation": ""},
+                            }
+                            for(var audio in audios){
+                                div = document.getElementById("div1")
+                                script=audios[audio]
+                                html = createTable(dir, exp, audio, script, 0)
+                                div.insertAdjacentHTML("afterend", html);
+                            }
+                        </script>
+                    </div>
+                </div>
+            </div>
+        </section>
 
-<h3>Comparison between Synthesized Mel-spectrograms</h3>
-  <td><img src="./assets/mel_comparison.png" width="1000"></td>
-  <br>
-</body>
+        <!-- Models Comparison -->
+        <section class="page-section bg-info text-white mb-0" id="mc">
+            <div class="container">
+                <!-- About Section Heading-->
+                <div class="text-center">
+                    <h2 class="page-section-heading d-inline-block text-white">Comparative Model</h2>
+                </div>
+                <div class="text-center">
+                    <br>
+                    <img width="90%" src="./assets/svs_table.png">
+                </div>
+                <br>
+                <!-- Sample of Comparison Models-->
+                <div class="row">
+                    <div id="div2" class="col-lg-auto ml-auto">
+                        <script>
+                            dir = "./assets/wavs/comparison"
+                            exp = {"GT": "gt",
+                                   "HiFi-GAN": "hifigan_recon",
+                                   "FastSpeech 2": "fs",
+                                   "DiffSinger": "ds",
+                                   "VISinger": "vi",
+                                   "HiddenSinger": "hs",
+                                }
+                            audios = {
+                                "p225_001": {"script": "",
+                                             "pronunciation": ""},
+                                "p225_002": {"script": "",
+                                             "pronunciation": ""},
+                                "p225_003": {"script": "",
+                                             "pronunciation": ""},
+                                "p225_004": {"script": "",
+                                             "pronunciation": ""},
+                            }
+                            for(var audio in audios){
+                                div = document.getElementById("div2")
+                                script=audios[audio]
+                                html = createTable(dir, exp, audio, script)
+                                // console.log(html)
+                                div.insertAdjacentHTML("afterend", html);
+                            }
+                        </script>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Audio Autoencoder -->
+        <section class="page-section bg-primary text-white mb-0" id="aa">
+          <div class="container">
+              <!-- About Section Heading-->
+              <div class="text-center">
+                  <h2 class="page-section-heading d-inline-block text-white">Audio Autoencoder</h2>
+              </div>
+              <div class="text-center">
+                <br>
+                <img width="90%" src="./assets/autoencoder_table.png">
+              </div>
+              <br>
+              <!-- Samlpe of Audio Autoencoder -->
+              <div class="row">
+                  <div id="div3" class="col-lg-auto ml-auto">
+                      <script>
+                          dir = "./wavs/autoencoder"
+                          exp = {"GT": "target",
+                                 "HiFi-GAN": "hifi",
+                                 "Autoencoder w/o reg.": "naive",
+                                 "Autoencoder w/ KL-reg.": "kl",
+                                 "Autoencoder w/ RVQ-reg.": "rvq",
+                              }
+                          audios = {
+                              "p225_001": {"script": "",
+                                           "pronunciation": ""},
+                              "p225_002": {"script": "",
+                                           "pronunciation": ""},
+                              "p225_003": {"script": "",
+                                           "pronunciation": ""},
+                              "p225_004": {"script": "",
+                                           "pronunciation": ""},
+                          }
+                          for(var audio in audios){
+                              div = document.getElementById("div3")
+                              script=audios[audio]
+                              html = createTable(dir, exp, audio, script, 0)
+                              // console.log(html)
+                              div.insertAdjacentHTML("afterend", html);
+                          }
+                      </script>
+                  </div>
+              </div>
+              <div class="divider-custom divider-light">
+                <div class="divider-custom"></div>
+              </div>
+              <!-- Latent Generator with Audio Autoencoder-->
+              <div class="text-center">
+                <h2 class="page-section-heading d-inline-block text-white">Latent Generator with Audio Autoencoder</h2>
+              </div>
+              <div class="text-center">
+                <br>
+                <img width="90%" src="./assets/lg_table.png">
+              </div>
+              <br>
+              <!-- Samlpe of Latent Generator with Audio Autoencoder -->
+              <div class="row">
+                  <div id="div4" class="col-lg-auto ml-auto">
+                      <script>
+                          dir = "./wavs/lg"
+                          exp = {"GT": "target",
+                                 "LG w/o reg.": "naive_lg",
+                                 "LG w/ KL-reg.": "kl_lg", 
+                                 "LG w/ RVQ-reg.": "rvq_lg",
+                                }
+                          audios = {
+                              "p225_001": {"script": "",
+                                          "pronunciation": ""},
+                              "p225_002": {"script": "",
+                                          "pronunciation": ""},
+                              "p225_003": {"script": "",
+                                          "pronunciation": ""},
+                              "p225_004": {"script": "",
+                                          "pronunciation": ""},
+                          }
+                          for(var audio in audios){
+                              div = document.getElementById("div4")
+                              script=audios[audio]
+                              html = createTable(dir, exp, audio, script, 0)
+                              // console.log(html)
+                              div.insertAdjacentHTML("afterend", html);
+                          }
+                      </script>
+                  </div>
+              </div>
+          </div>
+        </section>
+
+        <!-- Unsupervised Singing Voice Synthesis Framework -->
+        <section class="page-section bg-info text-white mb-0" id="unf">
+            <div class="container">
+                <!-- About Section Heading-->
+                <div class="text-center">
+                    <h2 class="page-section-heading d-inline-block text-white">Unsupervised SVS Framework</h2>
+                </div>
+                <br>
+                <!-- Sample of Unsupervised SVS Framework -->
+                <div class="row">
+                    <div id="div5" class="col-lg-auto ml-auto">
+                        <script>
+                            dir = "./wavs/pcd"
+                            exp = {"Target Speaker": "target",
+                                   "HiddenSinger-U": "hidden_u",
+                                }
+                            audios = {
+                                "p225_001": {"script": "",
+                                             "pronunciation": ""},
+                                "p225_002": {"script": "",
+                                             "pronunciation": ""},
+                                "p225_003": {"script": "",
+                                             "pronunciation": ""},
+                                "p225_004": {"script": "",
+                                             "pronunciation": ""},
+                            }
+                            for(var audio in audios){
+                                div = document.getElementById("div5")
+                                script=audios[audio]
+                                html = createTable(dir, exp, audio, script, 0)
+                                // console.log(html)
+                                div.insertAdjacentHTML("afterend", html);
+                            }
+                        </script>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Ablation Study -->
+        <section class="page-section bg-primary text-white mb-0" id="abl">
+            <div class="container">
+                <!-- About Section Heading-->
+                <div class="text-center">
+                    <h2 class="page-section-heading d-inline-block text-white">Ablation Study</h2>
+                </div>
+                <div class="text-center">
+                    <br>
+                    <img width="90%" src="./assets/abl_table.png">
+                </div>
+                <br>
+                <div class="row">
+                    <div id="div6" class="col-lg-auto ml-auto">
+                        <script>
+                            dir = "./wavs/pg"
+                            exp = {"GT": "gt",
+                                   "HiddenSinger": "hs",
+                                   "w/o Enhanced Prior Encoder": "wo_pe",
+                                   "w/ Gaussian Prior Noise": "prior",
+                                  }
+                            audios = {
+                                "p225_001": {"script": "",
+                                             "pronunciation": ""},
+                                "p225_002": {"script": "",
+                                             "pronunciation": ""},
+                                "p225_003": {"script": "",
+                                             "pronunciation": ""},
+                                "p225_004": {"script": "",
+                                             "pronunciation": ""},
+                            }
+                            for(var audio in audios){
+                                div = document.getElementById("div6")
+                                script=audios[audio]
+                                html = createTable(dir, exp, audio, script)
+                                // console.log(html)
+                                div.insertAdjacentHTML("afterend", html);
+                            }
+                        </script>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <div class="scroll-to-top d-lg-none position-fixed"><a class="js-scroll-trigger d-block text-center text-white rounded" href="#page-top"><i class="fa fa-chevron-up"></i></a></div>
+        <!-- Bootstrap core JS-->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
+        <!-- Third party plugin JS-->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.min.js"></script>
+        <script src="js/scripts.js"></script>
+        <!-- Bootstrap slider JavaScript -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/11.0.2/bootstrap-slider.min.js" integrity="sha512-f0VlzJbcEB6KiW8ZVtL+5HWPDyW1+nJEjguZ5IVnSQkvZbwBt2RfCBY0CBO1PsMAqxxrG4Di6TfsCPP3ZRwKpA==" crossorigin="anonymous"></script>
+        <!-- slider JS -->
+        <script type="text/javascript">
+        </script>
+    </body>
 </html>
