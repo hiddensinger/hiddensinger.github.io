@@ -24,12 +24,12 @@
                 html = "<table class=\"table table-responsive align-content-center\" style=\"background-color: white; border-radius: 20px\">"
                 html +="<thead><tr><th colspan=\"5\" style=\"width: 40%\">"
                 html +="<div class=\"text-left\">"
-                html += "Script : <i>"
+                html += "Script: <i>"
                 html += script["script"]
                 html +="</i></div>"
                 html +="<div class=\"text-left\">"
-                html += "\nPronunciation : <i>"
-                html += script["pronunciation"]
+                html += "\n(Pronunciation): <i>"
+                html += script["pronun"]
                 html +="</i></div>"
                 html += "</th></tr></thead>"
                 html +="<tbody><tr>"
@@ -99,8 +99,6 @@
                 <div class="row justify-content-center">
                     <div class="col-lg-12 ml-auto">
                         <p class="pre-wrap lead">Recently, denoising diffusion models have achieved remarkable performances among generative models in various domains. However, in the speech domain, applying diffusion models to synthesize time-varying audio has limitations in terms of complexity and controllability, because the audio synthesis requires very high-dimensional samples with long-term acoustic features. To reduce the burden of model complexity for singing voice synthesis, we propose HiddenSinger, which can synthesize high-quality singing voices using a neural audio codec and latent diffusion models. To generate high-fidelity audio, we introduce an audio autoencoder that can encode audio into audio codec codes as compressed latent representation and reconstruct high-fidelity audio from low-dimensional compressed latent vectors. Subsequently, we use latent diffusion models to sample latent from musical scores and then reconstruct high-quality audio by the audio autoencoder. In addition, our proposed model is extended into an unsupervised singing voice synthesis framework to train the model using an unlabeled singing voice dataset. The experimental results exhibit that our model performs better than previous models in terms of audio quality. Furthermore, HiddenSinger can synthesize high-quality singing voices using unlabeled data by training solely on only audio.</p>
-                        <br>
-                        <br>
                     </div>
                     <div class="text-center">
                         <br>
@@ -129,11 +127,11 @@
                                    "HiddenSinger-U": "hs_u"}
                             audios = {
                                 "C0055_26": {"script": "껑충껑충 귀여운 동물 친구",
-                                             "Pronunciation": "kkeongchungkkeongchung gwiyeoun dongmulchingu"},
+                                             "pronun": "kkeongchungkkeongchung gwiyeoun dongmulchingu"},
                                 "C0077_16": {"script": "오 우리 모두 같이 핫도그 쥐고",
-                                             "pronunciation": "o uli modu gat-i hasdogeu jwigo"},
+                                             "pronun": "oh uli modu gat-i hasdogeu jwigo"},
                                 "C0253_26": {"script": "기다림은 네버 이제 그만할래",
-                                             "pronunciation": "gidalim-eun nebeo ije geumanhallae"},
+                                             "pronun": "gidalim-eun never ije geumanhallae"},
                             }
                             for(var audio in audios){
                                 div = document.getElementById("div1")
@@ -169,13 +167,13 @@
                                 }
                             audios = {
                                 "C2167_29": {"script": "우 우 불안해하지는 마",
-                                             "pronunciation": "wo wo bul-anhaehajineun ma"},
+                                             "pronun": "wo wo bul-anhaehajineun ma"},
                                 "C0676_18": {"script": "아직 사랑해 여기 이 자리에서",
-                                             "pronunciation": "ajig salanghae yeogi i jalieseo"},
+                                             "pronun": "ajig salanghae yeogi i jalieseo"},
                                 "C0409_13": {"script": "어디로 떠나볼까 우리",
-                                             "pronunciation": "eodilo tteonabolkka uli"},
+                                             "pronun": "eodilo tteonabolkka uli"},
                                 "C0388_10": {"script": "내 앞에서 눈물 참지마요 오",
-                                             "pronunciation": "nae nun ap-eseo nunmul chamjimayo ooh"},
+                                             "pronun": "nae nun ap-eseo nunmul chamjimayo ooh"},
                             }
                             for(var audio in audios){
                                 div = document.getElementById("div2")
@@ -205,40 +203,37 @@
                           dir = "./assets/wavs/autoencoder"
                           exp = {"GT": "gt",
                                  "HiFi-GAN": "hifi",
+                                 "VISinger (recon.)": "visinger",
                                  "Autoencoder w/o reg.": "naive",
                                  "Autoencoder w/ KL-reg.": "kl",
                                  "Autoencoder w/ RVQ-reg.": "rvq",
                               }
                           audios = {
-                              "ba_03_30": {"script": "그댈 편히 쉬게 할 거야",
-                                           "pronunciation": "geudael pyeonhi swige hal geoya"},
-                              "kr012a_480_6": {"script": "한 줄기의 따스한 햇살 받으며",
-                                           "pronunciation": "han julgiui ttaseuhan haes-sal bad-eumyeo"},
-                              "p225_003": {"script": "",
-                                           "pronunciation": ""},
-                              "p225_004": {"script": "",
-                                           "pronunciation": ""},
+                              "ba_04_28": {"script": "예 예 너만 보고 너만 알고",
+                                           "pronun": "yeah yeah neoman bogo neoman algo"},
+                              "ba_03_31": {"script": "상상하고 꿈꾸던 사람 그대",
+                                            "pronun": "sangsanghago kkumkkudeon salam geudae"},
+                              "ba_04_13": {"script": "나 항상 그대 곁에 머물겠어요",
+                                           "pronun": "na hangsang geudae gyeot-e meomulgess-eoyo"},
+                              "ba_02_19": {"script": "내게 오는 날 나를 스쳐지나치지",
+                                           "pronun": "naege oneun nal naleul seuchyeojinachiji"},
                           }
                           for(var audio in audios){
                               div = document.getElementById("div3")
                               script=audios[audio]
-                              html = createTable(dir, exp, audio, script, 1, row=3)
+                              html = createTable(dir, exp, audio, script, 2, row=4)
                               // console.log(html)
                               div.insertAdjacentHTML("afterend", html);
                           }
                       </script>
-                  <!-- </div>
-              </div> -->
-              <!-- <div class="divider-custom divider-light">
-                <div class="divider-custom"></div>
-              </div> -->
                     </div>
                 </div>
             </div>
-        </section>
-        <section class="page-section bg-info text-white mb-0" id="unf">
+        <!-- </section> -->
+        <br>
+        <!-- Latent Generator with Audio Autoencoder-->
+        <!-- <section class="page-section bg-primary text-white mb-0" id="unf"> -->
             <div class="container">        
-              <!-- Latent Generator with Audio Autoencoder-->
               <div class="text-center">
                 <h2 class="page-section-heading d-inline-block text-white">Latent Generator with Audio Autoencoder</h2>
               </div>
@@ -247,22 +242,17 @@
               <div class="row">
                   <div id="div4" class="col-lg-auto ml-auto">
                       <script>
-                          dir = "./wavs/lg"
-                          exp = {"GT": "target",
-                                 "Latent Generator w/o reg.": "naive_lg",
-                                 "Latent Generator w/ KL-reg.": "kl_lg", 
-                                 "Latent Generator w/ RVQ-reg. (proposed)": "rvq_lg",
-                                }
-                          audios = {
-                              "p225_001": {"script": "",
-                                          "pronunciation": ""},
-                              "p225_002": {"script": "",
-                                          "pronunciation": ""},
-                              "p225_003": {"script": "",
-                                          "pronunciation": ""},
-                              "p225_004": {"script": "",
-                                          "pronunciation": ""},
-                          }
+                          dir = "./assets/wavs/combination_lg"
+                          exp = {"GT": "gt",
+                                 "Latent Generator w/o reg.": "naive",
+                                 "Latent Generator w/ KL-reg.": "kl", 
+                                 "Latent Generator w/ RVQ-reg. (proposed)": "rvq"}
+                          audios = {"C3585_14": {"script": "깊은 잠에 나도 모르게 빠지고 싶어",
+                                                 "pronun": "gip-eun jam-e nado moleuge ppajigo sip-eo"},
+                                    "C1386_11": {"script": "귀를 닫고서 너의 집 앞에서 그와 함께",
+                                                 "pronun": "gwileul dadgoseo neoui jib ap-eseo geuwa hamkke"},
+                                    "C1441_14": {"script": "지금 이 순간이 행복하다면",
+                                                 "pronun": "jigeum i sungan-i haengboghadamyeon"}}
                           for(var audio in audios){
                               div = document.getElementById("div4")
                               script=audios[audio]
@@ -277,7 +267,7 @@
         </section>
 
         <!-- Unsupervised Singing Voice Synthesis Framework -->
-        <section class="page-section bg-primary text-white mb-0" id="unf">
+        <section class="page-section bg-info text-white mb-0" id="unf">
             <div class="container">
                 <!-- About Section Heading-->
                 <div class="text-center">
@@ -294,9 +284,9 @@
                                 }
                             audios = {
                                 "shinsoi": {"script": "헤어나올 수가 없어",
-                                            "pronunciation": "heeonaol suga eopseo "},
+                                            "pronun": "heeonaol suga eopseo "},
                                 "leedahyun": {"script": "오늘도 너의 소식이 궁금해",
-                                             "pronunciation": "oneuldo neoui sosigi gunggeumhae "},
+                                             "pronun": "oneuldo neoui sosigi gunggeumhae "},
                             }
                             for(var audio in audios){
                                 div = document.getElementById("div5")
@@ -312,7 +302,7 @@
         </section>
 
         <!-- Ablation Study -->
-        <section class="page-section bg-info text-white mb-0" id="abl">
+        <section class="page-section bg-primary text-white mb-0" id="abl">
             <div class="container">
                 <!-- About Section Heading-->
                 <div class="text-center">
@@ -322,21 +312,19 @@
                 <div class="row">
                     <div id="div6" class="col-lg-auto ml-auto">
                         <script>
-                            dir = "./wavs/pg"
+                            dir = "./assets/wavs/abl"
                             exp = {"GT": "gt",
-                                   "HiddenSinger": "hs",
-                                   "w/o Enhanced Prior Encoder": "wo_pe",
-                                   "w/ Gaussian Prior Noise": "prior",
+                                   "HiddenSinger": "hidden",
+                                   "w/o Enhanced Prior Encoder": "no_enhance",
+                                   "w/ Gaussian Prior Noise": "gaussian_prior",
                                   }
                             audios = {
-                                "p225_001": {"script": "",
-                                             "pronunciation": ""},
-                                "p225_002": {"script": "",
-                                             "pronunciation": ""},
-                                "p225_003": {"script": "",
-                                             "pronunciation": ""},
-                                "p225_004": {"script": "",
-                                             "pronunciation": ""},
+                                "C2627_8": {"script": "그대만 보면 웃었던 나를 아나요 혹시",
+                                             "pronun": "geudaeman bomyeon us-eossdeon naleul anayo hogsi"},
+                                "C3807_26": {"script": "세상 모든 별 다 셀 때까지",
+                                             "pronun": "sesang modeun byeol da sel ttaekkaji"},
+                                "C1432_8": {"script": "잠 못드는 밤 니가 생각나서",
+                                             "pronun": "jam mot deuneun bam niga saeng-gagnaseo"},
                             }
                             for(var audio in audios){
                                 div = document.getElementById("div6")
