@@ -19,24 +19,37 @@
         <link rel="stylesheet" href="css/heading.css">
         <link rel="stylesheet" href="css/body.css">
         <script>
-            function createTable(dir, exp, audio, script, idx=1){
+            function createTable(dir, exp, audio, script, idx=1, row=3){
+
                 html = "<table class=\"table table-responsive align-content-center\" style=\"background-color: white; border-radius: 20px\">"
                 html +="<thead><tr><th colspan=\"5\" style=\"width: 40%\">"
-                html +="<div class=\"text-left\">Script : <i>"
+                html +="<div class=\"text-left\">"
+                html += "Script : <i>"
                 html += script["script"]
-                html +="</i></div></th></tr></thead><tbody><tr>"
+                html +="</i></div>"
+                html +="<div class=\"text-left\">"
+                html += "\nPronunciation : <i>"
+                html += script["pronunciation"]
+                html +="</i></div>"
+                html += "</th></tr></thead>"
+                html +="<tbody><tr>"
                 for(var key in exp){
-                    if (idx % 3 == 0){
+                    if (idx % row == 0){
                         html += "<tr>"    
                     }
                     html +="<td style=\"vertical-align: top;\"><p></p>"
                     html +=key
-                    html +="<div class=\"text-center\"><audio controls=\"controls\"><source src="
+                    html +="<div class=\"text-center\"><audio"
+                    if (row>3){
+                        html+= " controls=\"controls\" style=\"width: 190px;\"><source src="
+                    } else {
+                        html+= " controls=\"controls\"><source src="
+                    }
                     f = dir + "/" + exp[key] + "/" + audio + ".wav"
-                    html += f
+                    html += f                    
                     html +=" type=\"audio/wav\" /></audio></div></td>"
                     idx += 1
-                    if (idx % 3 == 0){
+                    if (idx % row == 0){
                         html += "</tr>"    
                     }
                 }
@@ -125,7 +138,7 @@
                             for(var audio in audios){
                                 div = document.getElementById("div1")
                                 script=audios[audio]
-                                html = createTable(dir, exp, audio, script, 0)
+                                html = createTable(dir, exp, audio, script, 0, row=4)
                                 div.insertAdjacentHTML("afterend", html);
                             }
                         </script>
@@ -167,7 +180,7 @@
                             for(var audio in audios){
                                 div = document.getElementById("div2")
                                 script=audios[audio]
-                                html = createTable(dir, exp, audio, script)
+                                html = createTable(dir, exp, audio, script, 2, row=4)
                                 // console.log(html)
                                 div.insertAdjacentHTML("afterend", html);
                             }
@@ -209,16 +222,22 @@
                           for(var audio in audios){
                               div = document.getElementById("div3")
                               script=audios[audio]
-                              html = createTable(dir, exp, audio, script, 0)
+                              html = createTable(dir, exp, audio, script, 1, row=3)
                               // console.log(html)
                               div.insertAdjacentHTML("afterend", html);
                           }
                       </script>
-                  </div>
-              </div>
-              <div class="divider-custom divider-light">
+                  <!-- </div>
+              </div> -->
+              <!-- <div class="divider-custom divider-light">
                 <div class="divider-custom"></div>
-              </div>
+              </div> -->
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="page-section bg-info text-white mb-0" id="unf">
+            <div class="container">        
               <!-- Latent Generator with Audio Autoencoder-->
               <div class="text-center">
                 <h2 class="page-section-heading d-inline-block text-white">Latent Generator with Audio Autoencoder</h2>
@@ -247,7 +266,7 @@
                           for(var audio in audios){
                               div = document.getElementById("div4")
                               script=audios[audio]
-                              html = createTable(dir, exp, audio, script, 0)
+                              html = createTable(dir, exp, audio, script, 2, row=3)
                               // console.log(html)
                               div.insertAdjacentHTML("afterend", html);
                           }
@@ -258,7 +277,7 @@
         </section>
 
         <!-- Unsupervised Singing Voice Synthesis Framework -->
-        <section class="page-section bg-info text-white mb-0" id="unf">
+        <section class="page-section bg-primary text-white mb-0" id="unf">
             <div class="container">
                 <!-- About Section Heading-->
                 <div class="text-center">
@@ -275,14 +294,14 @@
                                 }
                             audios = {
                                 "shinsoi": {"script": "헤어나올 수가 없어",
-                                            "pronunciation": ""},
+                                            "pronunciation": "heeonaol suga eopseo "},
                                 "leedahyun": {"script": "오늘도 너의 소식이 궁금해",
-                                             "pronunciation": ""},
+                                             "pronunciation": "oneuldo neoui sosigi gunggeumhae "},
                             }
                             for(var audio in audios){
                                 div = document.getElementById("div5")
                                 script=audios[audio]
-                                html = createTable(dir, exp, audio, script, 0)
+                                html = createTable(dir, exp, audio, script, 0, row=2)
                                 // console.log(html)
                                 div.insertAdjacentHTML("afterend", html);
                             }
@@ -293,7 +312,7 @@
         </section>
 
         <!-- Ablation Study -->
-        <section class="page-section bg-primary text-white mb-0" id="abl">
+        <section class="page-section bg-info text-white mb-0" id="abl">
             <div class="container">
                 <!-- About Section Heading-->
                 <div class="text-center">
@@ -322,7 +341,7 @@
                             for(var audio in audios){
                                 div = document.getElementById("div6")
                                 script=audios[audio]
-                                html = createTable(dir, exp, audio, script)
+                                html = createTable(dir, exp, audio, script, 2, row=3)
                                 // console.log(html)
                                 div.insertAdjacentHTML("afterend", html);
                             }
