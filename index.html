@@ -24,13 +24,13 @@
                 html = "<table class=\"table table-responsive align-content-center\" style=\"background-color: white; border-radius: 20px\">"
                 html +="<thead><tr><th colspan=\"5\" style=\"width: 40%\">"
                 html +="<div class=\"text-left\">"
-                html += "Script: "
+                html += "Script: <i>"
                 html += script["script"]
-                html +="</div>"
+                html +="</i></div>"
                 html +="<div class=\"text-left\">"
-                html += "\n<i><font size=\"3em\" color=\"#868e96\">(Pronunciation): "
+                html += "\n(Pronunciation): <i>"
                 html += script["pronun"]
-                html +="</font></i></div>"
+                html +="</i></div>"
                 html += "</th></tr></thead>"
                 html +="<tbody><tr>"
                 for(var key in exp){
@@ -173,7 +173,7 @@
                                 "C0409_13": {"script": "어디로 떠나볼까 우리",
                                              "pronun": "eodilo tteonabolkka uli"},
                                 "C0388_10": {"script": "내 앞에서 눈물 참지마요 오",
-                                             "pronun": "nae nun ap-eseo nunmul chamjimayo ooh"},
+                                             "pronun": "nae ap-eseo nunmul chamjimayo ooh"},
                             }
                             for(var audio in audios){
                                 div = document.getElementById("div2")
@@ -286,7 +286,7 @@
                                 "shinsoi": {"script": "헤어나올 수가 없어",
                                             "pronun": "heeonaol suga eopseo "},
                                 "leedahyun": {"script": "오늘도 너의 소식이 궁금해",
-                                             "pronun": "oneuldo neoui sosigi gunggeumhae "},
+                                             "pronun": "oneuldo neoui sosigi gunggeumhae"},
                             }
                             for(var audio in audios){
                                 div = document.getElementById("div5")
